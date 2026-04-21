@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Flap T/D | Kira's English</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+        
+        body { margin: 0; padding: 0; background-color: #000; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: white; }
+        
+        .action-card { background: #000; border-left: 4px solid #D30000; border-radius: 8px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); width: 95%; max-width: 450px; box-sizing: border-box; }
+        
+        .section-header { color: #ffffff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-bottom: 1.5px solid #D30000; padding-bottom: 6px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .progress-container { width: 100%; background: #222; height: 6px; border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+        .progress-bar { height: 100%; background: #D30000; width: 0%; transition: width 0.4s ease; }
+        
+        .exercise-block { background: #111; padding: 30px; border-radius: 10px; border: 1px solid #222; text-align: center; transition: 0.3s; }
+        
+        .target-text { color: #ffffff; font-size: 2.2rem; font-weight: 700; margin-bottom: 5px; display: block; line-height: 1.1; }
+        .ipa-text { color: #D30000; font-size: 1.4rem; font-weight: 400; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+
+        /* Estilo de la Traducción */
+        .translation-text { color: #666; font-size: 1rem; font-style: italic; margin-bottom: 20px; min-height: 24px; cursor: pointer; transition: 0.3s; }
+        .translation-text:hover { color: #aaa; }
+        .blur { filter: blur(5px); opacity: 0.5; }
+        
+        button { width: 100%; padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; margin: 8px 0; border: none; transition: 0.3s; }
+        
+        .btn-listen { background: #252525; color: white; border: 1px solid #444; }
+        .btn-speak { background: #D30000; color: white; position: relative; box-shadow: 0 4px 15px rgba(211, 0, 0, 0.3); }
+        .btn-next { background: #00FF00; color: #000; margin-top: 15px; }
+        .btn-skip { background: transparent; color: #555; border: 1px solid #222; font-size: 0.7rem; margin-top: 15px; }
+
+        #feedback { margin-top: 20px; min-height: 50px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; justify-content: center; text-align: center; }
+        
+        .success { color: #00FF00; }
+        .error { color: #D30000; }
+        .hidden { display: none; }
+        
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0px 0px rgba(211, 0, 0, 0.7); } 70% { box-shadow: 0 0 0px 20px rgba(211, 0, 0, 0); } 100% { box-shadow: 0 0 0px 0px rgba(211, 0, 0, 0); } }
+        .listening-active { animation: pulse-red 1.5s infinite; background-color: #ff0000 !important; }
+    </style>
+</head>
+<body>
+
+<div class="action-card">
+    <div class="section-header">
+        <span>Vowel Sounds + Flap T/D</span>
+        <span id="counter" style="color: #D30000;">1 / 72</span>
+    </div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div id="quiz-area">
+        <div class="exercise-block" id="block">
+            <span class="target-text" id="txt">Meeting</span>
+            <span class="ipa-text" id="ipa">/ˈmiːrɪŋ/</span>
+            
+            <div id="translation" class="translation-text blur" onclick="toggleBlur()">Reunión</div>
+            
+            <button class="btn-listen" onclick="play()">1. Escuchar Audio 🔊</button>
+            <button class="btn-speak" id="mic" onclick="start()">2. Presiona y Habla 🎤</button>
+            
+            <div id="feedback">Listo para empezar.</div>
+
+            <button id="next" class="btn-next hidden" onclick="go()">Siguiente Palabra ➔</button>
+            <button id="skip" class="btn-skip" onclick="go()">Saltar palabra</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const data = [
+        // 1. /i:/
+        { t: "Meeting", p: "/ˈmiːrɪŋ/", s: "Reunión" }, { t: "Greeting", p: "/ˈɡriːrɪŋ/", s: "Saludo" }, { t: "Sweeter", p: "/ˈswiːrər/", s: "Más dulce" },
+        { t: "Cheating", p: "/ˈtʃiːrɪŋ/", s: "Engañar / Hacer trampa" }, { t: "Beater", p: "/ˈbiːrər/", s: "Batidor" }, { t: "Heating", p: "/ˈhiːrɪŋ/", s: "Calefacción" },
+        // 2. /ɪ/
+        { t: "City", p: "/ˈsɪri/", s: "Ciudad" }, { t: "Pity", p: "/ˈpɪri/", s: "Lástima" }, { t: "Fitting", p: "/ˈfɪrɪŋ/", s: "Ajuste / Prueba de ropa" },
+        { t: "Sitting", p: "/ˈsɪrɪŋ/", s: "Sentado" }, { t: "Kitty", p: "/ˈkɪri/", s: "Gatito" }, { t: "Witty", p: "/ˈwɪri/", s: "Ingenioso" },
+        // 3. /e/
+        { t: "Better", p: "/ˈberər/", s: "Mejor" }, { t: "Letter", p: "/ˈlerər/", s: "Carta" }, { t: "Setting", p: "/ˈserɪŋ/", s: "Ajuste / Escenario" },
+        { t: "Getting", p: "/ˈɡerɪŋ/", s: "Obteniendo / Llegando" }, { t: "Petty", p: "/ˈperi/", s: "Insignificante" }, { t: "Met it", p: "/ˈmerɪt/", s: "Lo encontré" },
+        // 4. /æ/
+        { t: "Matter", p: "/ˈmærər/", s: "Asunto / Importar" }, { t: "Saturday", p: "/ˈsærərdeɪ/", s: "Sábado" }, { t: "Batter", p: "/ˈbærər/", s: "Masa / Bateador" },
+        { t: "Chatty", p: "/ˈtʃæri/", s: "Platicador" }, { t: "Pattern", p: "/ˈpærərn/", s: "Patrón" }, { t: "At all", p: "/æˈrɔːl/", s: "Para nada" },
+        // 5. /ʌ/
+        { t: "Butter", p: "/ˈbʌrər/", s: "Mantequilla" }, { t: "Cutter", p: "/ˈkʌrər/", s: "Cortador" }, { t: "Shut it", p: "/ˈʃʌrɪt/", s: "Ciérralo" },
+        { t: "Mutter", p: "/ˈmʌrər/", s: "Refunfuñar" }, { t: "Nutty", p: "/ˈnʌri/", s: "Alocado / Con nueces" }, { t: "Gutter", p: "/ˈɡʌrər/", s: "Alcantarilla" },
+        // 6. /ɑː/
+        { t: "Water", p: "/ˈwɔːrər/", s: "Agua" }, { t: "Potty", p: "/ˈpɑːri/", s: "Bacinica" }, { t: "Lot of", p: "/ˈlɑːrəv/", s: "Mucho de" },
+        { t: "Got it", p: "/ˈɡɑːrɪt/", s: "Lo tengo / Entendido" }, { t: "Spotted", p: "/ˈspɑːrəd/", s: "Manchado / Avistado" }, { t: "Body", p: "/ˈbɑːri/", s: "Cuerpo" },
+        // 7. /ɔː/
+        { t: "Daughter", p: "/ˈdɔːrər/", s: "Hija" }, { t: "Quarter", p: "/ˈkwɔːrər/", s: "Cuarto / Trimestre" }, { t: "Shorten", p: "/ˈʃɔːrən/", s: "Acortar" },
+        { t: "Sorted", p: "/ˈsɔːrəd/", s: "Clasificado" }, { t: "Forty", p: "/ˈfɔːri/", s: "Cuarenta" }, { t: "Watery", p: "/ˈwɔːrəri/", s: "Acuoso" },
+        // 8. /ʊ/
+        { t: "Put it", p: "/ˈpʊrɪt/", s: "Ponlo" }, { t: "Footage", p: "/ˈfʊrɪdʒ/", s: "Metraje / Grabación" }, { t: "Pudding", p: "/ˈpʊrɪŋ/", s: "Pudín" },
+        { t: "Good at", p: "/ˈɡʊræt/", s: "Bueno en" }, { t: "Wooden", p: "/ˈwʊrən/", s: "De madera" }, { t: "Should I", p: "/ˈʃʊraɪ/", s: "¿Debería yo?" },
+        // 9. /u:/
+        { t: "Beautiful", p: "/ˈbjuːrɪfʊl/", s: "Hermoso" }, { t: "Computer", p: "/kəmˈpjuːrər/", s: "Computadora" }, { t: "Shooting", p: "/ˈʃuːrɪŋ/", s: "Disparando" },
+        { t: "Scooter", p: "/ˈskuːrər/", s: "Motoneta" }, { t: "Suitor", p: "/ˈsuːrər/", s: "Pretendiente" }, { t: "Rooting", p: "/ˈruːrɪŋ/", s: "Apoyar / Echar porras" },
+        // 10. /ɜːr/
+        { t: "Dirty", p: "/ˈdɜːri/", s: "Sucio" }, { t: "Flirty", p: "/ˈflɜːri/", s: "Coqueto" }, { t: "Shirt it", p: "/ˈʃɜːrɪt/", s: "Camisa (verbo coloq.)" },
+        { t: "Thirty", p: "/ˈθɜːri/", s: "Treinta" }, { t: "Alerted", p: "/əˈlɜːrəd/", s: "Alertado" }, { t: "Stir it", p: "/ˈstɜːrɪt/", s: "Agítalo / Revuélvelo" },
+        // 11. /ə/
+        { t: "Data", p: "/ˈdeɪrə/", s: "Datos" }, { t: "Soda", p: "/ˈsoʊrə/", s: "Refresco" }, { t: "Item", p: "/ˈaɪrəm/", s: "Artículo / Objeto" },
+        { t: "Atom", p: "/ˈærəm/", s: "Átomo" }, { t: "Bottom", p: "/ˈbɑːrəm/", s: "Fondo / Parte inferior" }, { t: "Waiting", p: "/ˈweɪrɪŋ/", s: "Esperando" },
+        // 12. /oʊ/
+        { t: "Total", p: "/ˈtoʊrəl/", s: "Total" }, { t: "Noted", p: "/ˈnoʊrəd/", s: "Anotado" }, { t: "Floated", p: "/ˈfloʊrəd/", s: "Flotó" },
+        { t: "Voted", p: "/ˈvoʊrəd/", s: "Votó" }, { t: "Quoted", p: "/ˈkwoʊrəd/", s: "Citado" }, { t: "Motor", p: "/ˈmoʊrər/", s: "Motor" }
+    ];
+
+    let idx = 0;
+    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const rec = Recognition ? new Recognition() : null;
+    if(rec) { rec.lang = 'en-US'; rec.continuous = false; }
+
+    function toggleBlur() { document.getElementById('translation').classList.toggle('blur'); }
+
+    function play() {
+        window.speechSynthesis.cancel();
+        let u = new SpeechSynthesisUtterance(data[idx].t);
+        u.lang = 'en-US';
+        u.rate = 0.75;
+        window.speechSynthesis.speak(u);
+    }
+
+    function start() {
+        if (!rec) return alert("Micro no compatible.");
+        try { rec.start(); } catch(e) {}
+        document.getElementById('mic').classList.add('listening-active');
+        document.getElementById('mic').innerText = "Escuchando... 🎤";
+    }
+
+    rec.onresult = (e) => {
+        let heard = e.results[0][0].transcript.toLowerCase().replace(/[.,!?]/g,"").trim();
+        let target = data[idx].t.toLowerCase().replace(/[.,!?]/g,"").trim();
+        const fb = document.getElementById('feedback');
+
+        if (heard.includes(target) || target.includes(heard)) {
+            fb.innerHTML = `<span class="success">¡Muy bien! Escuché "${target}"</span>`;
+            document.getElementById('next').classList.remove('hidden');
+            document.getElementById('skip').classList.add('hidden');
+        } else {
+            fb.innerHTML = `<span class="error">Escuché: "${heard}"...</span>`;
+        }
+    };
+
+    rec.onend = () => {
+        document.getElementById('mic').classList.remove('listening-active');
+        document.getElementById('mic').innerText = "2. Presiona y Habla 🎤";
+    };
+
+    function go() {
+        idx++;
+        if (idx < data.length) {
+            document.getElementById('txt').innerText = data[idx].t;
+            document.getElementById('ipa').innerText = data[idx].p;
+            document.getElementById('translation').innerText = data[idx].s;
+            document.getElementById('translation').classList.add('blur'); // Reset blur
+            document.getElementById('counter').innerText = `${idx + 1} / ${data.length}`;
+            document.getElementById('progress-bar').style.width = `${((idx + 1) / data.length) * 100}%`;
+            document.getElementById('next').classList.add('hidden');
+            document.getElementById('skip').classList.remove('hidden');
+            document.getElementById('feedback').innerHTML = "Listo.";
+        } else {
+            document.getElementById('quiz-area').innerHTML = `<h2 style="color:#00FF00">¡MAESTRÍA TOTAL!</h2><button class="btn-speak" onclick="location.reload()">REINICIAR</button>`;
+        }
+    }
+
+    document.getElementById('progress-bar').style.width = `${((idx + 1) / data.length) * 100}%`;
+</script>
+</body>
+</html>
