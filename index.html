@@ -9,34 +9,57 @@
         
         body { margin: 0; padding: 0; background-color: #000; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: white; }
         
-        .action-card { background: #000; border-left: 4px solid #D30000; border-radius: 8px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); width: 95%; max-width: 450px; box-sizing: border-box; }
+        .action-card { background: #000; border-left: 8px solid #D30000; border-radius: 12px; padding: 40px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); width: 95%; max-width: 900px; box-sizing: border-box; }
         
-        .section-header { color: #ffffff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-bottom: 1.5px solid #D30000; padding-bottom: 6px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
         
-        .progress-container { width: 100%; background: #222; height: 6px; border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+        .header-title-container { display: flex; align-items: center; gap: 15px; border-bottom: 3px solid #D30000; padding-bottom: 12px; }
+        .header-title-container span { color: #ffffff; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; }
+        
+        .logo-bracket { width: 50px; height: 50px; background: #000; border-left: 4px solid #D30000; border-radius: 6px; display: flex; align-items: center; justify-content: center; padding-left: 6px; }
+        .logo-bracket img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+        
+        .header-right { display: flex; align-items: center; gap: 20px; padding-bottom: 12px; white-space: nowrap; }
+        #counter { font-size: 1.1rem; font-weight: 700; color: #D30000; }
+        
+        .progress-container { width: 100%; background: #222; height: 10px; border-radius: 5px; margin-bottom: 25px; overflow: hidden; }
         .progress-bar { height: 100%; background: #D30000; width: 0%; transition: width 0.4s ease; }
         
-        .exercise-block { background: #111; padding: 30px; border-radius: 10px; border: 1px solid #222; text-align: center; transition: 0.3s; }
+        .exercise-block { background: #111; padding: 40px 30px; border-radius: 15px; border: 1px solid #222; text-align: center; }
         
-        .target-text { color: #ffffff; font-size: 2.2rem; font-weight: 700; margin-bottom: 5px; display: block; line-height: 1.1; }
-        .ipa-text { color: #D30000; font-size: 1.4rem; font-weight: 400; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+        .target-text, .ipa-text { font-size: 2.5rem; font-weight: 700; display: block; margin-bottom: 8px; line-height: 1.1; }
+        .target-text { color: #ffffff; }
+        .ipa-text { color: #D30000; }
 
-        .translation-text { color: #666; font-size: 1rem; font-style: italic; margin-bottom: 20px; min-height: 24px; cursor: pointer; transition: 0.3s; }
-        .translation-text:hover { color: #aaa; }
-        .blur { filter: blur(5px); opacity: 0.5; }
+        .translation-text { font-size: 1.3rem; color: #666; font-style: italic; margin: 15px auto 25px auto; min-height: 28px; cursor: pointer; transition: 0.3s; display: inline-block; }
+        .translation-text:hover { color: #fff; }
+        .blur { filter: blur(5px); opacity: 0.6; }
         
-        button { width: 100%; padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; margin: 8px 0; border: none; transition: 0.3s; }
+        button { width: 100%; max-width: 400px; padding: 20px; border-radius: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; margin: 10px auto; border: none; transition: 0.2s; display: block; }
         
         .btn-listen { background: #252525; color: white; border: 1px solid #444; }
+        .btn-listen:hover { background: #333; }
         .btn-speak { background: #D30000; color: white; position: relative; box-shadow: 0 4px 15px rgba(211, 0, 0, 0.3); }
         .btn-next { background: #00FF00; color: #000; margin-top: 15px; }
-        .btn-skip { background: transparent; color: #555; border: 1px solid #222; font-size: 0.7rem; margin-top: 15px; }
-
-        #feedback { margin-top: 20px; min-height: 50px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .btn-skip { background: transparent; color: #555; border: 1px solid #222; font-size: 0.8rem; }
         
-        .success { color: #00FF00; }
-        .error { color: #D30000; }
+        #feedback { margin-top: 20px; min-height: 50px; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; justify-content: center; text-align: center; color: #ffffff; }
+        
+        .success { color: #00FF00 !important; }
+        .error { color: #D30000 !important; }
         .hidden { display: none; }
+        
+        @media (max-width: 600px) { 
+            .action-card { padding: 20px; }
+            .exercise-block { padding: 30px 15px; }
+            .target-text, .ipa-text { font-size: 2rem; } 
+            .logo-bracket { width: 35px; height: 35px; } 
+            .logo-bracket img { width: 30px; height: 30px; } 
+            .header-title-container span { font-size: 0.9rem; }
+            .header-right { gap: 10px; }
+            #counter { font-size: 0.85rem; }
+            .translation-text { font-size: 1.1rem; }
+        }
         
         @keyframes pulse-red { 0% { box-shadow: 0 0 0px 0px rgba(211, 0, 0, 0.7); } 70% { box-shadow: 0 0 0px 20px rgba(211, 0, 0, 0); } 100% { box-shadow: 0 0 0px 0px rgba(211, 0, 0, 0); } }
         .listening-active { animation: pulse-red 1.5s infinite; background-color: #ff0000 !important; }
@@ -46,8 +69,13 @@
 
 <div class="action-card">
     <div class="section-header">
-        <span>Vowel Sounds + Flap T/D</span>
-        <span id="counter" style="color: #D30000;">1 / 65</span>
+        <div class="header-title-container">
+            <div class="logo-bracket"><img src="https://drive.google.com/thumbnail?id=1DQWHMZf7MpnzZBa3CbqqyJGLQEK6U4lZ" alt="Kira"></div>
+            <span>Vowel Sounds + Flap T/D</span>
+        </div>
+        <div class="header-right">
+            <span id="counter">1 / 65</span>
+        </div>
     </div>
     
     <div class="progress-container">
@@ -56,13 +84,15 @@
 
     <div id="quiz-area">
         <div class="exercise-block" id="block">
-            <span class="target-text" id="txt">Meeting</span>
-            <span class="ipa-text" id="ipa">/ˈmiːtɪn/</span>
+            <span class="target-text" id="txt"></span>
+            <span class="ipa-text" id="ipa"></span>
             
-            <div id="translation" class="translation-text blur" onclick="toggleBlur()">Reunión</div>
+            <div>
+                <div id="translation" class="translation-text blur" onclick="toggleBlur()"></div>
+            </div>
             
             <button class="btn-listen" onclick="play()">1. Escuchar Audio 🔊</button>
-            <button class="btn-speak" id="mic" onclick="start()">2. Presiona y Habla 🎤</button>
+            <button class="btn-speak" id="mic" onclick="start()">2. Presiona y Habla: 🎤</button>
             
             <div id="feedback">Listo para empezar.</div>
 
@@ -73,7 +103,7 @@
 </div>
 
 <script>
-    const data = [
+    let data = [
         // 1. /i:/
         { t: "Meeting", p: "/ˈmiːtɪn/", s: "Reunión" }, { t: "Greeting", p: "/ˈɡriːtɪn/", s: "Saludo" }, { t: "Sweeter", p: "/ˈswiːtər/", s: "Más dulce" },
         { t: "Cheating", p: "/ˈtshiːtɪn/", s: "Engañar / Hacer trampa" }, { t: "Beater", p: "/ˈbiːtər/", s: "Batidor" }, { t: "Heating", p: "/ˈhiːtɪn/", s: "Calefacción" },
@@ -112,6 +142,8 @@
         { t: "Voted", p: "/ˈvoʊtəd/", s: "Votó" }, { t: "Motor", p: "/ˈmoʊtər/", s: "Motor" }
     ];
 
+    data = data.sort(() => Math.random() - 0.5);
+
     let idx = 0;
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const rec = Recognition ? new Recognition() : null;
@@ -134,43 +166,49 @@
         document.getElementById('mic').innerText = "Escuchando... 🎤";
     }
 
-    rec.onresult = (e) => {
-        let heard = e.results[0][0].transcript.toLowerCase().replace(/[.,!?]/g,"").trim();
-        let target = data[idx].t.toLowerCase().replace(/[.,!?]/g,"").trim();
-        const fb = document.getElementById('feedback');
+    if(rec) {
+        rec.onresult = (e) => {
+            let heard = e.results[0][0].transcript.toLowerCase().replace(/[.,!?]/g,"").trim();
+            let target = data[idx].t.toLowerCase().replace(/[.,!?]/g,"").trim();
+            const fb = document.getElementById('feedback');
 
-        if (heard.includes(target) || target.includes(heard)) {
-            fb.innerHTML = `<span class="success">¡Muy bien! Escuché "${target}"</span>`;
-            document.getElementById('next').classList.remove('hidden');
-            document.getElementById('skip').classList.add('hidden');
-        } else {
-            fb.innerHTML = `<span class="error">Escuché: "${heard}"...</span>`;
-        }
-    };
+            if (heard.includes(target) || target.includes(heard)) {
+                fb.innerHTML = `<span class="success">¡Muy bien! Escuché "${target}" ✅</span>`;
+                document.getElementById('next').classList.remove('hidden');
+                document.getElementById('skip').classList.add('hidden');
+            } else {
+                fb.innerHTML = `<span class="error">Escuché: "${heard}"... ❌</span>`;
+            }
+        };
 
-    rec.onend = () => {
-        document.getElementById('mic').classList.remove('listening-active');
-        document.getElementById('mic').innerText = "2. Presiona y Habla 🎤";
-    };
+        rec.onend = () => {
+            document.getElementById('mic').classList.remove('listening-active');
+            document.getElementById('mic').innerText = "2. Presiona y Habla: 🎤";
+        };
+    }
+
+    function updateCard() {
+        document.getElementById('txt').innerText = data[idx].t;
+        document.getElementById('ipa').innerText = data[idx].p;
+        document.getElementById('translation').innerText = data[idx].s;
+        document.getElementById('translation').classList.add('blur');
+        document.getElementById('counter').innerText = `${idx + 1} / ${data.length}`;
+        document.getElementById('progress-bar').style.width = `${((idx + 1) / data.length) * 100}%`;
+    }
 
     function go() {
         idx++;
         if (idx < data.length) {
-            document.getElementById('txt').innerText = data[idx].t;
-            document.getElementById('ipa').innerText = data[idx].p;
-            document.getElementById('translation').innerText = data[idx].s;
-            document.getElementById('translation').classList.add('blur');
-            document.getElementById('counter').innerText = `${idx + 1} / ${data.length}`;
-            document.getElementById('progress-bar').style.width = `${((idx + 1) / data.length) * 100}%`;
+            updateCard();
             document.getElementById('next').classList.add('hidden');
             document.getElementById('skip').classList.remove('hidden');
             document.getElementById('feedback').innerHTML = "Listo.";
         } else {
-            document.getElementById('quiz-area').innerHTML = `<h2 style="color:#00FF00">¡MAESTRÍA TOTAL!</h2><button class="btn-speak" onclick="location.reload()">REINICIAR</button>`;
+            document.getElementById('quiz-area').innerHTML = `<div class="exercise-block"><h2 style="color:#00FF00">¡MAESTRÍA TOTAL!</h2><button class="btn-speak" onclick="location.reload()">REINICIAR</button></div>`;
         }
     }
 
-    document.getElementById('progress-bar').style.width = `${((idx + 1) / data.length) * 100}%`;
+    updateCard();
 </script>
 </body>
 </html>
